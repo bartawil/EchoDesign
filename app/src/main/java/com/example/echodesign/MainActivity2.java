@@ -1,17 +1,85 @@
 package com.example.echodesign;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity2 extends AppCompatActivity {
+
+//    List<String> list;
+//
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_main2);
+//
+//        list = new ArrayList<>();
+//        list.add("Foo");
+//        list.add("Bar");
+//        list.add("Baz");
+//
+//        ListView lvItems = findViewById(R.id.lvItems);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+//                android.R.layout.simple_list_item_1,
+//                list);
+//
+//        lvItems.setAdapter(adapter);
+//
+//        Log.i("MainActivity2", "onCreate");
+//    }
+
+    private AppDB db;
+    private PostDao postDao;
+    private List<Post> posts;
+    private ArrayAdapter<Post> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        Log.i("MainActivity2", "onCreate");
+
+        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "PostsDB")
+                .allowMainThreadQueries()
+                .build();
+
+        postDao = db.postDao();
+
+        FloatingActionButton btnAdd = findViewById(R.id.btnAdd);
+        btnAdd.setOnClickListener(view -> {
+            Intent i = new Intent(this, FormActivity.class);
+            startActivity(i);
+        });
+
+        posts = new ArrayList<>();
+
+        ListView lvPosts = findViewById(R.id.lvPosts);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, posts);
+
+        lvPosts.setAdapter(adapter);
+
+        lvPosts.setOnItemLongClickListener((adapterView, view, i, l) -> {
+            Post post = posts.remove(i);
+            postDao.delete(post);
+            adapter.notifyDataSetChanged();
+            return true;
+        });
+
+        lvPosts.setOnItemClickListener((adapterView, view, i ,l) -> {
+            Intent intent = new Intent(this, FormActivity.class);
+            intent.putExtra("id", posts.get(i).getId());
+            startActivity(intent);
+
+        });
     }
 
     @Override
@@ -24,6 +92,9 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.i("MainActivity2", "onResume");
+        posts.clear();
+        posts.addAll(postDao.index());
+        adapter.notifyDataSetChanged();
     }
 
     @Override
