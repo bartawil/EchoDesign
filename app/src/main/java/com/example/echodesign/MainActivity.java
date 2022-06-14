@@ -6,7 +6,7 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.echodesign.api.PostAPI;
+import com.example.echodesign.api.UserAPI;
 import com.example.echodesign.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,8 +17,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        PostAPI postAPI = new PostAPI();
-        postAPI.get();
+        UserAPI userAPI = new UserAPI();
+        userAPI.get("a");
+        //User user = new User("ron", "d", "1234", "img");
+        //userAPI.post(user);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
 
