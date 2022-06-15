@@ -1,6 +1,7 @@
 package com.example.echodesign;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Log.i("MainActivity", "onCreate");
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
     }
 
     @Override
@@ -69,4 +71,6 @@ public class MainActivity extends AppCompatActivity {
         super.onRestart();
         Log.i("MainActivity", "onRestart");
     }
+
+
 }

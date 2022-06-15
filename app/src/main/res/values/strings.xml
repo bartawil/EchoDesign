@@ -5,5 +5,5 @@
     <string name="login_btnLogin">Login</string>
     <string name="foooo">Echo</string>
     <string name="btnSave">Save</string>
-    <string name="BaseUrl">http://10.0.2.2:7277/</string>
+    <string name="BaseUrl">http://10.0.2.2:7099/api/</string>
 </resources>
