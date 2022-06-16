@@ -6,4 +6,6 @@
     <string name="foooo">Echo</string>
     <string name="btnSave">Save</string>
     <string name="BaseUrl">http://10.0.2.2:7099/api/</string>
+    <string name="channel_name">My foo bar</string>
+    <string name="channel_description">In this channel you will get notified on foo and bar</string>
 </resources>

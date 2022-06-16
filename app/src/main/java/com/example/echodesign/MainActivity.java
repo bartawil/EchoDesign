@@ -11,8 +11,10 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import com.example.echodesign.api.UserAPI;
 import com.example.echodesign.databinding.ActivityMainBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,10 +25,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        UserAPI userAPI = new UserAPI();
-        userAPI.get("a");
-        //User user = new User("ron", "d", "1234", "img");
-        //userAPI.post(user);
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(MainActivity.this, new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                String newToken = instanceIdResult.getToken();
+            }
+        });
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
 
@@ -76,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-// When user taps the enable/disable
+                        // When user taps the enable/disable
                         // dark mode button
                         if (isDarkModeOn) {
 
@@ -117,8 +121,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
-        );
 
+        );
     }
 
     @Override
@@ -156,7 +160,4 @@ public class MainActivity extends AppCompatActivity {
         super.onRestart();
         Log.i("MainActivity", "onRestart");
     }
-
-
-
 }

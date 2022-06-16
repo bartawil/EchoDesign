@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "36382679034",
+    "project_id": "echodesign-570d8",
+    "storage_bucket": "echodesign-570d8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36382679034:android:cab865eb0a95a9b1e94e43",
+        "android_client_info": {
+          "package_name": "com.example.echodesign"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "36382679034-o1vjnk7m11tqnsnvdcgafsgn2oc3rg4q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAb6PDzZQ1Qc6jGDmEpMz_Bt-ymC54gxxU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "36382679034-o1vjnk7m11tqnsnvdcgafsgn2oc3rg4q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
