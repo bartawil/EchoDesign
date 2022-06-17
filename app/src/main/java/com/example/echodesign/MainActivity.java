@@ -3,6 +3,7 @@ package com.example.echodesign;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,17 +11,35 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.echodesign.databinding.ActivityMainBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+
+import java.text.DateFormat;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private Button btnToggleDark;
+    private SampleViewModel viewModel;
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Intent i = new Intent(this, MainActivity2.class);
+            startActivity(i);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            Log.e("On Config Change","PORTRAIT");
+
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +55,17 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(binding.getRoot());
 
+        // 8
+        viewModel = new ViewModelProvider(this).get(SampleViewModel.class);
+        viewModel.getFoo().observe(this, foo->getSupportActionBar().setTitle(foo));
+
+        FloatingActionButton btnAdd = findViewById(R.id.btnAdd);
+        btnAdd.setOnClickListener(view->{
+            String currentDataTime = DateFormat.getDateTimeInstance().format(new Date());
+            viewModel.getFoo().setValue(currentDataTime);
+        });
+
+        //
         binding.btnLogin.setOnClickListener(v -> {
            Intent i = new Intent(this, MainActivity2.class);
            startActivity(i);
@@ -43,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i("MainActivity", "onCreate");
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+
 
         btnToggleDark = findViewById(R.id.button2);
         // Saving state of our app

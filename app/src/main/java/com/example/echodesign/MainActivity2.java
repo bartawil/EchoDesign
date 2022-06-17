@@ -1,6 +1,7 @@
 package com.example.echodesign;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -42,6 +43,18 @@ public class MainActivity2 extends AppCompatActivity {
     private PostDao postDao;
     private List<Post> posts;
     private ArrayAdapter<Post> adapter;
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Log.e("On Config Change","LANSPACE");
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

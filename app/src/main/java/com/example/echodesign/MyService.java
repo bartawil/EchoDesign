@@ -32,7 +32,7 @@ public class MyService extends FirebaseMessagingService {
     }
 
     public void createNotificationChannel() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel("1", "name", importance);
             channel.setDescription("Demo channel");
