@@ -1,16 +1,13 @@
 package com.example.echodesign;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.echodesign.databinding.ActivityMainBinding;
@@ -25,8 +22,8 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private Button btnToggleDark;
     private SampleViewModel viewModel;
+    private Button settingsBtn;
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -71,89 +68,14 @@ public class MainActivity extends AppCompatActivity {
            startActivity(i);
         });
 
+        // initializing our button.
+        binding.idBtnSettings.setOnClickListener(v -> {
+            Intent i = new Intent(this, Settings.class);
+            startActivity(i);
+        });
+
         Log.i("MainActivity", "onCreate");
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-
-
-        btnToggleDark = findViewById(R.id.button2);
-        // Saving state of our app
-        // using SharedPreferences
-        SharedPreferences sharedPreferences
-                = getSharedPreferences(
-                "sharedPrefs", MODE_PRIVATE);
-        final SharedPreferences.Editor editor
-                = sharedPreferences.edit();
-        final boolean isDarkModeOn
-                = sharedPreferences
-                .getBoolean(
-                        "isDarkModeOn", false);
-        // When user reopens the app
-        // after applying dark/light mode
-        if (isDarkModeOn) {
-            AppCompatDelegate
-                    .setDefaultNightMode(
-                            AppCompatDelegate
-                                    .MODE_NIGHT_YES);
-            btnToggleDark.setText(
-                    "Disable Dark Mode");
-        }
-        else {
-            AppCompatDelegate
-                    .setDefaultNightMode(
-                            AppCompatDelegate
-                                    .MODE_NIGHT_NO);
-            btnToggleDark
-                    .setText(
-                            "Enable Dark Mode");
-        }
-
-        btnToggleDark.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // When user taps the enable/disable
-                        // dark mode button
-                        if (isDarkModeOn) {
-
-                            // if dark mode is on it
-                            // will turn it off
-                            AppCompatDelegate
-                                    .setDefaultNightMode(
-                                            AppCompatDelegate
-                                                    .MODE_NIGHT_NO);
-                            // it will set isDarkModeOn
-                            // boolean to false
-                            editor.putBoolean(
-                                    "isDarkModeOn", false);
-                            editor.apply();
-
-                            // change text of Button
-                            btnToggleDark.setText(
-                                    "Enable Dark Mode");
-                        }
-                        else {
-
-                            // if dark mode is off
-                            // it will turn it on
-                            AppCompatDelegate
-                                    .setDefaultNightMode(
-                                            AppCompatDelegate
-                                                    .MODE_NIGHT_YES);
-
-                            // it will set isDarkModeOn
-                            // boolean to true
-                            editor.putBoolean(
-                                    "isDarkModeOn", true);
-                            editor.apply();
-
-                            // change text of Button
-                            btnToggleDark.setText(
-                                    "Disable Dark Mode");
-                        }
-                    }
-                }
-
-        );
     }
 
     @Override
